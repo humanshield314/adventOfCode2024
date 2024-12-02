@@ -49,7 +49,6 @@ public class Day1 {
             simScores.add(key * freq.getOrDefault(key, 0));
         }
         return simScores.stream().mapToInt(Integer::intValue).sum();
-
     }
 
     private List<List<Integer>> loadFromFile() throws IOException {
