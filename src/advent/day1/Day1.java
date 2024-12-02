@@ -1,7 +1,13 @@
 package advent.day1;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class Day1 {
     File file;
@@ -17,13 +23,13 @@ public class Day1 {
         list2 = twoLists.get(1);
         sorted1 = new ArrayList<>();
         sorted2 = new ArrayList<>();
-        Collections.copy(list1,sorted1);
-        Collections.copy(list2,sorted2);
+        Collections.copy(list1, sorted1);
+        Collections.copy(list2, sorted2);
         Collections.sort(sorted1);
         Collections.sort(sorted2);
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Day1 day1 = new Day1("resources/day1/inputDay1.txt");
         Integer diff = day1.listDiff();
         System.out.printf("%d is diff\n", diff);
@@ -31,21 +37,21 @@ public class Day1 {
 
     }
 
-    private Integer listDiff(){
+    private Integer listDiff() {
         int distance = 0;
-        for(int i = 0; i<sorted1.size(); i++){
+        for (int i = 0; i < sorted1.size(); i++) {
             distance += Math.abs(sorted1.get(i) - sorted2.get(i));
         }
         return distance;
     }
 
-    private int similarityScore(){
-        HashMap<Integer,Integer> freq = new HashMap<>();
+    private int similarityScore() {
+        HashMap<Integer, Integer> freq = new HashMap<>();
         List<Integer> simScores = new ArrayList<>();
-        for(int item : list2){
-            freq.put(item, freq.getOrDefault(item,0)+1);
+        for (int item : list2) {
+            freq.put(item, freq.getOrDefault(item, 0) + 1);
         }
-        for(int key : list1){
+        for (int key : list1) {
             simScores.add(key * freq.getOrDefault(key, 0));
         }
         return simScores.stream().mapToInt(Integer::intValue).sum();
@@ -59,7 +65,7 @@ public class Day1 {
         List<List<Integer>> retList = new ArrayList<>();
         retList.add(list1);
         retList.add(list2);
-        while(line != null){
+        while (line != null) {
             String[] split = line.split("\\s+");
             list1.add(Integer.parseInt(split[0]));
             list2.add(Integer.parseInt(split[1]));
