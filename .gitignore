@@ -13,6 +13,7 @@ out/
 .sts4-cache
 AdventOfCode.iml
 bin/
+.idea
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
