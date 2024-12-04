@@ -19,7 +19,6 @@ public class Day3 {
 
     public static void main(String[] args) throws IOException {
         Day3 day3 = new Day3();
-        day3.getMultiples(day3.reports);
         System.out.println(day3.getMultiples(day3.reports));
         System.out.println(day3.getMultiples(day3.parseCommands(day3.reports)));
     }
@@ -43,12 +42,19 @@ public class Day3 {
 
     public List<String> parseCommands(List<String> commandList){
         ArrayList<String> targetStrings = new ArrayList<>();
-        for(String command : commandList){
-            String[] doSplits = command.split("do\\(\\)");
+        StringBuilder appended= new StringBuilder();
+        for(String command : commandList) {
+            //the input file was treated as each line as a single command, but the entire file was the command
+            appended.append(command);
+        }
+            String[] doSplits = appended.toString().split("do\\(\\)");
             for(String split : doSplits){
-                String[] dontSplits = split.split("don't\\(\\)");
-                targetStrings.add(dontSplits[0]);
-            }
+                if(split.contains("don't()")) {
+                    String[] dontSplits = split.split("don't\\(\\)", 2);
+                    targetStrings.add(dontSplits[0]);
+                }else {
+                    targetStrings.add(split);
+                }
         }
         return targetStrings;
     }
