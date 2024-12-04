@@ -18,6 +18,19 @@ public class XmasSearch {
     public static void main(String[] args) throws IOException {
         XmasSearch xmasSearch = new XmasSearch();
         System.out.println(xmasSearch.searchXmas(xmasSearch.wordSearch));
+        System.out.println(xmasSearch.searchDoubleXmas(xmasSearch.wordSearch));
+    }
+
+    public int searchDoubleXmas(char[][] wordSearch) {
+        int count = 0;
+
+        //if i check 1 to wordSearch.length -1 should be safe...
+        for (int row = 1; row < wordSearch.length - 1; row++) {
+            for (int col = 1; col < wordSearch[0].length - 1; col++) {
+                count += checkMas(wordSearch, row, col);
+            }
+        }
+        return count;
     }
 
     public int searchXmas(char[][] wordSearch) {
@@ -31,6 +44,33 @@ public class XmasSearch {
             }
         }
         return count;
+    }
+
+    private int checkMas(char[][] wordSearch, int row, int col) {
+        int rowCount = 0;
+        //safety checks
+        char A = wordSearch[row][col];
+        char ul = wordSearch[row - 1][col - 1];
+        char ur = wordSearch[row - 1][col + 1];
+        char bl = wordSearch[row + 1][col - 1];
+        char br = wordSearch[row + 1][col + 1];
+
+        //could be clever but just gotta check the four different configurations
+
+        if (ul == ur && ul == 'M' && bl == br && bl == 'S' && A == 'A') {
+            rowCount++;
+        }
+        if (ur == br && ur == 'M' && ul == bl && bl == 'S' && A == 'A') {
+            rowCount++;
+        }
+        if (ul == ur && ur == 'S' && bl == br && bl == 'M' && A == 'A') {
+            rowCount++;
+        }
+        if (ur == br && ur == 'S' && ul == bl && bl == 'M' && A == 'A') {
+            rowCount++;
+        }
+
+        return rowCount;
     }
 
     private int checkCol(char[][] wordSearch, int row, int col) {
