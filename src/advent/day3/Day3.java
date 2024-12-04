@@ -13,6 +13,7 @@ public class Day3 {
     String fileLoc = "resources/day3/inputDay3.txt";
     File file = new File(fileLoc);
     List<String> reports;
+
     public Day3() throws IOException {
         reports = this.loadCommands();
     }
@@ -24,15 +25,15 @@ public class Day3 {
     }
 
 
-    public int getMultiples(List<String> commandList){
+    public int getMultiples(List<String> commandList) {
         String regex = "mul\\((\\d{1,3}),(\\d{1,3})\\)";
 
         Pattern pattern = Pattern.compile(regex);
         int count = 0;
-        for(String command : commandList){
+        for (String command : commandList) {
             Matcher matcher = pattern.matcher(command);
 
-            while(matcher.find()){
+            while (matcher.find()) {
                 count = count + Integer.parseInt(matcher.group(1)) * Integer.parseInt(matcher.group(2));
             }
         }
@@ -40,21 +41,17 @@ public class Day3 {
         return count;
     }
 
-    public List<String> parseCommands(List<String> commandList){
+    public List<String> parseCommands(List<String> commandList) {
         ArrayList<String> targetStrings = new ArrayList<>();
-        StringBuilder appended= new StringBuilder();
-        for(String command : commandList) {
+        StringBuilder singleCommand = new StringBuilder();
+        for (String command : commandList) {
             //the input file was treated as each line as a single command, but the entire file was the command
-            appended.append(command);
+            singleCommand.append(command);
         }
-            String[] doSplits = appended.toString().split("do\\(\\)");
-            for(String split : doSplits){
-                if(split.contains("don't()")) {
-                    String[] dontSplits = split.split("don't\\(\\)", 2);
-                    targetStrings.add(dontSplits[0]);
-                }else {
-                    targetStrings.add(split);
-                }
+        String[] doSplits = singleCommand.toString().split("do\\(\\)");
+        for (String split : doSplits) {
+            String[] dontSplits = split.split("don't\\(\\)", 2);
+            targetStrings.add(dontSplits[0]);
         }
         return targetStrings;
     }
